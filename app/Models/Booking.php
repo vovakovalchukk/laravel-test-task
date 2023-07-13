@@ -12,6 +12,21 @@ class Booking extends Model
 
     protected $table = 'bookings';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'hotel_id',
+        'customer_id',
+        'sales_price',
+        'purchase_price',
+        'arrival_date',
+        'purchase_date',
+        'nights',
+    ];
+
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);

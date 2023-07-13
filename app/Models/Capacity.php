@@ -12,6 +12,17 @@ class Capacity extends Model
 
     protected $table = 'capacities';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'hotel_id',
+        'date',
+        'capacity',
+    ];
+
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);

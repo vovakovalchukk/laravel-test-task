@@ -12,6 +12,15 @@ class Hotel extends Model
 
     protected $table = 'hotels';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+    ];
+
     public function capacities(): HasMany
     {
         return $this->hasMany(Capacity::class);
