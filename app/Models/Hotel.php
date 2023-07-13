@@ -17,4 +17,10 @@ class Hotel extends Model
         return $this->hasMany(Capacity::class);
     }
 
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+
 }
