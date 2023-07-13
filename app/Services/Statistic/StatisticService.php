@@ -8,7 +8,6 @@ use App\Actions\Statistic\Task3Action;
 
 class StatisticService
 {
-
     public function __construct(
         private readonly Task1Action $task1,
         private readonly Task2Action $task2,
@@ -17,21 +16,10 @@ class StatisticService
 
     public function calculate(): array
     {
-        $generator = $this->generate();
-
-        $data = [];
-
-        foreach ($generator as $key => $result) {
-            $data[$key] = $result;
-        }
-
-        return $data;
-    }
-
-    private function generate(): \Generator
-    {
-        yield 'task1' => iterator_to_array($this->task1->handle());
-        yield 'task2' => iterator_to_array($this->task2->handle());
-        yield 'task3' => iterator_to_array($this->task3->handle());
+        return [
+            "{$this->task1->getName()}" => $this->task1->handle()->toArray(),
+            "{$this->task2->getName()}" => $this->task2->handle()->toArray(),
+            "{$this->task3->getName()}" => $this->task3->handle()->toArray(),
+        ];
     }
 }

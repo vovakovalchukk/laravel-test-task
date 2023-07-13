@@ -13,7 +13,8 @@ class DataImportingServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(\App\Contracts\Bookings\BookingImportingFromCsv::class, BookingImportingFromCsv::class);
+        $this->app->bind(\App\Contracts\Capacities\CapacityImportingFromCsv::class, CapacityImportingFromCsv::class);
     }
 
     /**
@@ -21,7 +22,6 @@ class DataImportingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(\App\Contracts\Bookings\BookingImportingFromCsv::class, BookingImportingFromCsv::class);
-        $this->app->bind(\App\Contracts\Capacities\CapacityImportingFromCsv::class, CapacityImportingFromCsv::class);
+
     }
 }

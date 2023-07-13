@@ -36,6 +36,7 @@ class GenerateStatistic extends Command
         $this->info('Running...');
 
         try {
+            Cache::delete('statistic');
             Cache::remember('statistic', 86400, function (){
                 return $this->statisticService->calculate();
             });

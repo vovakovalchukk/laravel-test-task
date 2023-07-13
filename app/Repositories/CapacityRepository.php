@@ -7,17 +7,17 @@ use App\Models\Capacity;
 
 class CapacityRepository implements CapacityRepositoryInterface
 {
-    public function getAvailableDates($hotelId, $startDate, $endDate, $nights)
+    public function getAvailableDates($hotelId, $startDate, $endDate)
     {
-        return Capacity::where('hotel_id', $hotelId)
+        return Capacity::query()->where('hotel_id', $hotelId)
             ->whereBetween('date', [$startDate, $endDate])
             ->where('capacity', '>', 0)
             ->pluck('id')
             ->toArray();
     }
 
-    public function decrementCapacity($capacityIds)
+    public function decrementCapacity($capacityIds): void
     {
-        Capacity::whereIn('id', $capacityIds)->decrement('capacity');
+        Capacity::query()->whereIn('id', $capacityIds)->decrement('capacity');
     }
 }

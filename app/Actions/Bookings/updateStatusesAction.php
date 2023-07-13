@@ -16,7 +16,7 @@ class updateStatusesAction  implements ActionInterface
         private readonly BookingRepositoryInterface $bookingRepository
     ) {}
 
-    public function handle(): bool
+    public function handle()
     {
         $approvedBookingIds = [];
         $rejectedBookingIds = [];
@@ -42,18 +42,13 @@ class updateStatusesAction  implements ActionInterface
 
     protected function isBookingApproved(Booking $booking): bool
     {
-        $arrivalDate = Carbon::parse($booking->arrival_date)
-            ->format('Y-m-d');
-
-        $lastNight = Carbon::parse($booking->arrival_date)
-            ->addDays($booking->nights - 1)
-            ->format('Y-m-d');
+        $arrivalDate = Carbon::parse($booking->arrival_date);
+        $lastNight = Carbon::parse($booking->arrival_date)->addDays($booking->nights - 1);
 
         $availableDates = $this->capacityRepository->getAvailableDates(
             $booking->hotel_id,
             $arrivalDate,
-            $lastNight,
-            $booking->nights
+            $lastNight
         );
 
         if (count($availableDates) === $booking->nights) {

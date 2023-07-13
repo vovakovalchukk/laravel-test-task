@@ -11,11 +11,13 @@ class StatisticController extends Controller
         private readonly StatisticService $statisticService,
     ) {}
 
-    public function index(StatisticService $statisticService)
+    public function index()
     {
-        $data = Cache::remember('statistic', 86400, function (){
-             return $this->statisticService->calculate();
-        });
+        $data = Cache::remember(
+            'statistic',
+            86400,
+            fn() => $this->statisticService->calculate()
+        );
 
         return view('statistic.dashboard', compact('data'));
     }

@@ -12,12 +12,11 @@ class BookingRepository implements BookingRepositoryInterface
 {
     public function getWithNullStatus($callback)
     {
-        Booking::query()->whereNull('status')
+        Booking::whereNull('status')
             ->orderBy('purchase_date')
             ->orderBy('id')
-            ->chunk(1000, function ($bookings) use ($callback) {
-                $bookings->each($callback);
-            });
+            ->lazy()
+            ->each($callback);
     }
 
     public function updateStatuses($bookingIds, $status)

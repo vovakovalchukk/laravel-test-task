@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 class Booking extends Model
 {
     use HasFactory;
@@ -27,6 +28,13 @@ class Booking extends Model
         'nights',
         'status',
     ];
+
+    protected $casts = [
+        'arrival_date' => 'datetime:Y-m-d',
+        'purchase_date' => 'datetime:Y-m-d',
+    ];
+
+
 
     public function hotel(): BelongsTo
     {
