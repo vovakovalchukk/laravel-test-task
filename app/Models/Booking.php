@@ -25,6 +25,7 @@ class Booking extends Model
         'arrival_date',
         'purchase_date',
         'nights',
+        'status',
     ];
 
     public function hotel(): BelongsTo
