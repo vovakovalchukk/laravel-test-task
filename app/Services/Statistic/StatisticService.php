@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Statistic;
 
 use App\Actions\Statistic\Task1Action;
 use App\Actions\Statistic\Task2Action;

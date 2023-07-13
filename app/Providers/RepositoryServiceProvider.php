@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Contracts\BookingRepositoryInterface;
-use App\Contracts\CapacityRepositoryInterface;
-use App\Contracts\HotelRepositoryInterface;
-use App\Contracts\UserRepositoryInterface;
+use App\Contracts\Bookings\BookingRepositoryInterface;
+use App\Contracts\Capacities\CapacityRepositoryInterface;
+use App\Contracts\Hotels\HotelRepositoryInterface;
+use App\Contracts\Users\UserRepositoryInterface;
 use App\Repositories\BookingRepository;
 use App\Repositories\CapacityRepository;
 use App\Repositories\HotelRepository;

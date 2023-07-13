@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Contracts\UserRepositoryInterface;
+use App\Contracts\Users\UserRepositoryInterface;
 use App\Models\User;
-use App\Services\BookingService;
+use App\Services\Bookings\BookingService;
 use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface

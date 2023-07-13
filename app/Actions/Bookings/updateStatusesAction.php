@@ -3,8 +3,8 @@
 namespace App\Actions\Bookings;
 
 use App\Contracts\Actions\ActionInterface;
-use App\Contracts\BookingRepositoryInterface;
-use App\Contracts\CapacityRepositoryInterface;
+use App\Contracts\Bookings\BookingRepositoryInterface;
+use App\Contracts\Capacities\CapacityRepositoryInterface;
 use App\Enums\Bookings\StatusTypes;
 use App\Models\Booking;
 use Illuminate\Support\Carbon;

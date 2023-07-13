@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Contracts;
-
-use App\Models\Booking;
+namespace App\Contracts\Capacities;
 
 interface CapacityRepositoryInterface
 {

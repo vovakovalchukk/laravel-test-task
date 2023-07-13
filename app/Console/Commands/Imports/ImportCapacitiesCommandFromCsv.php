@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Imports;
 
-use App\Contracts\BookingImportingFromCsv;
-use App\Contracts\CapacityImportingFromCsv;
+use App\Contracts\Capacities\CapacityImportingFromCsv;
 use Illuminate\Console\Command;
 
 class ImportCapacitiesCommandFromCsv extends Command

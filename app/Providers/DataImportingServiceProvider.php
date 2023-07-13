@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\BookingImportingFromCsv;
-use App\Services\CapacityImportingFromCsv;
+use App\Services\Imports\BookingImportingFromCsv;
+use App\Services\Imports\CapacityImportingFromCsv;
 use Illuminate\Support\ServiceProvider;
 
 class DataImportingServiceProvider extends ServiceProvider
@@ -21,7 +21,7 @@ class DataImportingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(\App\Contracts\BookingImportingFromCsv::class, BookingImportingFromCsv::class);
-        $this->app->bind(\App\Contracts\CapacityImportingFromCsv::class, CapacityImportingFromCsv::class);
+        $this->app->bind(\App\Contracts\Bookings\BookingImportingFromCsv::class, BookingImportingFromCsv::class);
+        $this->app->bind(\App\Contracts\Capacities\CapacityImportingFromCsv::class, CapacityImportingFromCsv::class);
     }
 }

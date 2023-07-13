@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Imports;
 
 use App\Enums\Database\TableNames;
 use Generator;
@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use SplFileObject;
 
-class BookingImportingFromCsv implements \App\Contracts\BookingImportingFromCsv
+class CapacityImportingFromCsv implements \App\Contracts\Capacities\CapacityImportingFromCsv
 {
     public function import(string $filePath): void
     {
@@ -21,7 +21,7 @@ class BookingImportingFromCsv implements \App\Contracts\BookingImportingFromCsv
         foreach ($file as $row) {
             $rowCount++;
 
-            if ($row === false || count($row) !== 8 || $rowCount === 1) {
+            if ($row === false || count($row) !== 3 || $rowCount === 1) {
                 continue;
             }
 
@@ -41,13 +41,9 @@ class BookingImportingFromCsv implements \App\Contracts\BookingImportingFromCsv
     private function prepareData(array $row): ?array
     {
         return [
-            'hotel_id' => $row[1],
-            'customer_id' => $row[2],
-            'sales_price' => $row[3],
-            'purchase_price' => $row[4],
-            'arrival_date' => Carbon::parse($row[5]),
-            'purchase_date' => Carbon::parse($row[6]),
-            'nights' => $row[7],
+            'hotel_id' => $row[0],
+            'date' => Carbon::parse($row[1]),
+            'capacity' => $row[2],
         ];
     }
 
@@ -56,7 +52,7 @@ class BookingImportingFromCsv implements \App\Contracts\BookingImportingFromCsv
         $chunks = array_chunk($records, 500);
 
         foreach ($chunks as $chunk) {
-            DB::table(TableNames::BOOKINGS)->insert($chunk);
+            DB::table(TableNames::CAPACITIES)->insert($chunk);
             yield;
         }
     }

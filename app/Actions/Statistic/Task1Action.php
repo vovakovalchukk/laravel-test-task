@@ -3,7 +3,7 @@
 namespace App\Actions\Statistic;
 
 use App\Contracts\Actions\ActionInterface;
-use App\Contracts\HotelRepositoryInterface;
+use App\Contracts\Hotels\HotelRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class Task1Action implements ActionInterface

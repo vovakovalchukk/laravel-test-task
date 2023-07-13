@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Contracts\BookingRepositoryInterface;
+use App\Contracts\Bookings\BookingRepositoryInterface;
 use App\Enums\Bookings\StatusTypes;
 use App\Models\Booking;
 use Illuminate\Support\Collection;

@@ -2,17 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Contracts\HotelRepositoryInterface;
+use App\Contracts\Hotels\HotelRepositoryInterface;
 use App\Enums\Bookings\StatusTypes;
 use App\Models\Hotel;
-use App\Services\BookingService;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class HotelRepository implements HotelRepositoryInterface
 {
     public function __construct(
-        private readonly BookingService $bookingService
     ) {}
 
     public function getHotelsWithSmallestWeekendStays(int $limit = 5): Collection

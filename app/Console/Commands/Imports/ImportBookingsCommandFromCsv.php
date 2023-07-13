@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Imports;
 
-use App\Contracts\BookingImportingFromCsv;
+use App\Contracts\Bookings\BookingImportingFromCsv;
 use Illuminate\Console\Command;
 
 class ImportBookingsCommandFromCsv extends Command

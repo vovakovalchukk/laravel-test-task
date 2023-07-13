@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Bookings;
 
 use App\Actions\Bookings\updateStatusesAction;
-use Illuminate\Support\Facades\DB;
 
 class BookingService
 {

@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Bookings;
 
-use App\Contracts\BookingImportingFromCsv;
-use App\Contracts\CapacityImportingFromCsv;
-use App\Services\BookingService;
-use App\Services\StatisticService;
+use App\Services\Bookings\BookingService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
