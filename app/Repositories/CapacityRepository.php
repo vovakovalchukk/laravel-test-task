@@ -18,6 +18,11 @@ class CapacityRepository implements CapacityRepositoryInterface
 
     public function decrementCapacity($capacityIds): void
     {
-        Capacity::query()->whereIn('id', $capacityIds)->decrement('capacity');
+        Capacity::query()->whereIn('id', $capacityIds)
+            ->lazy()
+            ->each(function ($capacity) {
+                $capacity->decrement('capacity');
+                $capacity->save();
+            });
     }
 }
