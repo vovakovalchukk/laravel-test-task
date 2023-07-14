@@ -8,6 +8,7 @@ use App\Contracts\Capacities\CapacityRepositoryInterface;
 use App\Enums\Bookings\StatusTypes;
 use App\Models\Booking;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class updateStatusesAction  implements ActionInterface
 {
@@ -18,18 +19,24 @@ class updateStatusesAction  implements ActionInterface
 
     public function handle()
     {
+        Log::channel('bookings-update-statuses')->info('start of updating statuses');
+
         $approvedBookingIds = [];
         $rejectedBookingIds = [];
 
         $this->bookingRepository->getWithNullStatus(function ($booking) use (&$approvedBookingIds, &$rejectedBookingIds) {
             if ($this->isBookingApproved($booking)) {
                 $approvedBookingIds[] = $booking->id;
+                Log::channel('bookings-update-statuses')->info('approve');
             } else {
                 $rejectedBookingIds[] = $booking->id;
+                Log::channel('bookings-update-statuses')->info('reject');
             }
         });
 
         $this->updateBookingStatuses($approvedBookingIds, $rejectedBookingIds);
+
+        Log::channel('bookings-update-statuses')->info('finish of updating statuses');
 
         return true;
     }
@@ -42,16 +49,28 @@ class updateStatusesAction  implements ActionInterface
 
     protected function isBookingApproved(Booking $booking): bool
     {
+        $hotelId = $booking->hotel_id;
         $arrivalDate = Carbon::parse($booking->arrival_date);
-        $lastNight = Carbon::parse($booking->arrival_date)->addDays($booking->nights - 1);
+        $cntNights = $booking->nights;
+        $lastNight = Carbon::parse($booking->arrival_date)->addDays($cntNights - 1);
 
         $availableDates = $this->capacityRepository->getAvailableDates(
-            $booking->hotel_id,
+            $hotelId,
             $arrivalDate,
             $lastNight
         );
 
-        if (count($availableDates) === $booking->nights) {
+        $cntAvlavleDates = count($availableDates);
+
+        Log::channel('bookings-update-statuses')->info("booking {$booking->id}", [
+            'hotel id' => $hotelId,
+            'arrival date' => $arrivalDate,
+            'nights' => $cntNights,
+            'last night' => $lastNight,
+            'count of avaliable days' => $cntAvlavleDates
+        ]);
+
+        if ($cntAvlavleDates === $cntNights) {
             $this->capacityRepository->decrementCapacity($availableDates);
             return true;
         }

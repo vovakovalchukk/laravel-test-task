@@ -25,7 +25,8 @@ class CapacityImportingFromCsv implements \App\Contracts\Capacities\CapacityImpo
                 continue;
             }
 
-            $bookingRecords[] = $this->prepareData($row);
+            $data = $this->prepareData($row);
+            $this->updateCapacity($bookingRecords, $data['hotel_id'], $data['date'], $data['capacity']);
 
             if ($rowCount % 1000 === 0) {
                 $this->generateInserting($this->insertData($bookingRecords));
@@ -46,6 +47,23 @@ class CapacityImportingFromCsv implements \App\Contracts\Capacities\CapacityImpo
             'capacity' => $row[2],
         ];
     }
+
+    function updateCapacity(array &$array, string $hotelId, Carbon $date, int $capacity): void
+    {
+        foreach ($array as &$item) {
+            if ($item['hotel_id'] === $hotelId && $item['date']->equalTo($date)) {
+                $item['capacity'] += $capacity;
+                return;
+            }
+        }
+
+        $array[] = [
+            'hotel_id' => $hotelId,
+            'date' => $date,
+            'capacity' => $capacity,
+        ];
+    }
+
 
     private function insertData(array $records): Generator
     {
