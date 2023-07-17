@@ -17,12 +17,14 @@ class HotelRepository implements HotelRepositoryInterface
         return Hotel::withCount(['bookings' => function ($query) {
             $query->where('status', StatusTypes::APPROVED)
                 ->where(function ($query) {
-                    $query->whereRaw('DAYOFWEEK(arrival_date) = 6')
-                        ->orWhereRaw('DAYOFWEEK(arrival_date) = 7');
+                    $query->orWhereRaw('DAYOFWEEK(arrival_date) = 6')
+                        ->orWhereRaw('DAYOFWEEK(arrival_date) = 7')
+                        ->orWhereRaw('DAYOFWEEK(DATE_ADD(arrival_date, INTERVAL nights DAY)) = 6')
+                        ->orWhereRaw('DAYOFWEEK(DATE_ADD(arrival_date, INTERVAL nights DAY)) = 7');
                 });
         }])
             ->orderBy('bookings_count')
-            ->limit(5)
+            ->limit($limit)
             ->get(['id', 'name', 'bookings_count'])
             ->map(function ($hotel) {
                 return [
@@ -31,6 +33,7 @@ class HotelRepository implements HotelRepositoryInterface
                     'bookings_count' => $hotel->bookings_count,
                 ];
             });
+
     }
 
     public function getAverageRejectionRatePerHotel(): Collection
