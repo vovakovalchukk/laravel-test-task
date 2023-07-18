@@ -11,31 +11,6 @@ class HotelRepository implements HotelRepositoryInterface
 {
     public function __construct(
     ) {}
-
-    public function getHotelsWithSmallestWeekendStays(int $limit = 5): Collection
-    {
-        return Hotel::withCount(['bookings' => function ($query) {
-            $query->where('status', StatusTypes::APPROVED)
-                ->where(function ($query) {
-                    $query->orWhereRaw('DAYOFWEEK(arrival_date) = 6')
-                        ->orWhereRaw('DAYOFWEEK(arrival_date) = 7')
-                        ->orWhereRaw('DAYOFWEEK(DATE_ADD(arrival_date, INTERVAL nights DAY)) = 6')
-                        ->orWhereRaw('DAYOFWEEK(DATE_ADD(arrival_date, INTERVAL nights DAY)) = 7');
-                });
-        }])
-            ->orderBy('bookings_count')
-            ->limit($limit)
-            ->get(['id', 'name', 'bookings_count'])
-            ->map(function ($hotel) {
-                return [
-                    'id' => $hotel->id,
-                    'name' => $hotel->name,
-                    'bookings_count' => $hotel->bookings_count,
-                ];
-            });
-
-    }
-
     public function getAverageRejectionRatePerHotel(): Collection
     {
         return Hotel::query()->withCount([
