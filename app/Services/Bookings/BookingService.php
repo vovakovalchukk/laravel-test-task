@@ -2,12 +2,12 @@
 
 namespace App\Services\Bookings;
 
-use App\Actions\Bookings\updateStatusesAction;
+use App\Actions\Bookings\UpdateStatusesAction;
 
 class BookingService
 {
     public function __construct(
-        private readonly updateStatusesAction $updateStatuses,
+        private readonly UpdateStatusesAction $updateStatuses,
     ) {}
 
     public function updateStatuses(): void

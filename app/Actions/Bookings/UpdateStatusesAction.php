@@ -10,7 +10,7 @@ use App\Models\Booking;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class updateStatusesAction  implements ActionInterface
+class UpdateStatusesAction  implements ActionInterface
 {
     public function __construct(
         private readonly CapacityRepositoryInterface $capacityRepository,
